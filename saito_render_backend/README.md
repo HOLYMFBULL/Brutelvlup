@@ -17,4 +17,4 @@ This package contains the complete standalone Python bot backend with all Render
    - **Health Check Path**: `/api/stats`
 8. Click **Deploy Web Service**.
 
-Once deployed, copy your Render URL (e.g. `https://saito-freefire-bot.onrender.com`) and paste it into your Cloudflare dashboard at `https://trefguu.pages.dev/`!
+Once deployed, copy your Render URL (e.g. `https://brutelvlup.onrender.com`) and paste it into your Cloudflare dashboard at `https://trefguu.pages.dev/`!

@@ -113,7 +113,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </button>
             </div>
             <p className="mt-1 text-[11px] text-slate-500">
-              Paste the public URL from your Render dashboard (e.g. https://saito-freefire-bot.onrender.com).
+              Paste the public URL from your Render dashboard (e.g. https://brutelvlup.onrender.com).
             </p>
           </div>
 

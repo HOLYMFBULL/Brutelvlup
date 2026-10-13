@@ -14,7 +14,7 @@ export class BotEngineService {
   private settings: BotSettings = INITIAL_SETTINGS;
   private connection: ConnectionConfig = {
     mode: 'render',
-    backendUrl: 'https://saito-freefire-bot.onrender.com',
+    backendUrl: 'https://brutelvlup.onrender.com',
     status: 'connecting',
     latencyMs: null,
     lastChecked: null,
@@ -44,8 +44,10 @@ export class BotEngineService {
       const savedConn = localStorage.getItem(STORAGE_KEYS.CONNECTION);
       if (savedConn) {
         const parsed = JSON.parse(savedConn);
-        if (parsed.backendUrl) {
+        if (parsed.backendUrl && !parsed.backendUrl.includes('saito-freefire-bot.onrender.com')) {
           this.connection.backendUrl = parsed.backendUrl;
+        } else {
+          this.connection.backendUrl = 'https://brutelvlup.onrender.com';
         }
       }
 

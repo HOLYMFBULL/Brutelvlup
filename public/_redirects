@@ -3,8 +3,8 @@
 # Place in publish directory or /public folder
 # ========================================================
 # Proxy API calls directly to Render backend to eliminate CORS issues
-# Replace 'https://saito-freefire-bot.onrender.com' with your actual Render service URL
-/api/*  https://saito-freefire-bot.onrender.com/api/:splat  200
+# Render service URL: https://brutelvlup.onrender.com
+/api/*  https://brutelvlup.onrender.com/api/:splat  200
 
 # SPA fallback rule for React router/direct links
 /*  /index.html  200
