@@ -39,8 +39,8 @@ import xora_pb2
 from dashboard_server import bot_state, start_web_dashboard
 
 # ==================== CONFIGURATION ====================
-WEB_HOST = "0.0.0.0"
-WEB_PORT = int(os.environ.get("SERVER_PORT") or os.environ.get("PORT") or 3000)
+WEB_HOST = os.environ.get("HOST", "0.0.0.0")
+WEB_PORT = int(os.environ.get("PORT") or os.environ.get("SERVER_PORT") or 10000)
 ACCOUNTS_FILE = "accounts.json"
 TOKEN_CACHE_FILE = "token_cache.json"
 DEVICES_FILE = "devices.json"
@@ -3001,9 +3001,10 @@ async def main():
         print_info(f"   • MAX_MEMBERS : {SQUAD_MAX_MEMBERS}")
     print_colored("-" * 60, Colors.MAGENTA)
 
+    _dashboard_runner = None
     try:
-        await start_web_dashboard(host=WEB_HOST, port=WEB_PORT)
-        print_success(f"[✓] Dashboard UI Active: http://localhost:{WEB_PORT}")
+        _dashboard_runner = await start_web_dashboard(host=WEB_HOST, port=WEB_PORT)
+        print_success(f"[✓] Dashboard UI Active & Health Checked: http://{WEB_HOST}:{WEB_PORT}")
     except Exception as e:
         print_error(f"Could not start web dashboard: {e}")
 

@@ -767,10 +767,40 @@ async def cors_middleware(request: web.Request, handler):
     return response
 
 
-async def start_web_dashboard(host: str = "0.0.0.0", port: int = 5000):
+async def handle_health(request: web.Request) -> web.Response:
+    """Universal health check endpoint for Render, Railway, Cloudflare probes"""
+    return web.json_response({
+        "status": "ok",
+        "service": "saito-freefire-bot",
+        "uptime": max(1, int(time.time() - bot_state.start_time)),
+        "accounts": len(bot_state.accounts),
+        "total_matches": bot_state.total_matches,
+    })
+
+
+_GLOBAL_RUNNER: Optional[web.AppRunner] = None
+_GLOBAL_SITE: Optional[web.TCPSite] = None
+
+
+async def start_web_dashboard(host: str = "0.0.0.0", port: int = 10000):
+    global _GLOBAL_RUNNER, _GLOBAL_SITE
     app = web.Application(middlewares=[cors_middleware])
+
+    # Root & Universal health routes for Render / Railway / Cloudflare (both GET and HEAD)
     app.router.add_get("/", handle_index)
+    app.router.add_head("/", handle_index)
+    app.router.add_get("/health", handle_health)
+    app.router.add_head("/health", handle_health)
+    app.router.add_get("/healthz", handle_health)
+    app.router.add_head("/healthz", handle_health)
+    app.router.add_get("/ping", handle_health)
+    app.router.add_head("/ping", handle_health)
+    app.router.add_get("/api/health", handle_health)
+    app.router.add_head("/api/health", handle_health)
     app.router.add_get("/api/stats", handle_get_stats)
+    app.router.add_head("/api/stats", handle_get_stats)
+
+    # Bot Account and Log Controls
     app.router.add_post("/api/account/add", handle_add_account)
     app.router.add_post("/api/account/delete", handle_delete_account)
     app.router.add_post("/api/account/refresh", handle_refresh_account)
@@ -784,4 +814,7 @@ async def start_web_dashboard(host: str = "0.0.0.0", port: int = 5000):
     await runner.setup()
     site = web.TCPSite(runner, host, port)
     await site.start()
+    _GLOBAL_RUNNER = runner
+    _GLOBAL_SITE = site
     return runner
+

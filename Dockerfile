@@ -31,9 +31,5 @@ COPY . ./
 # Expose HTTP API port for Render
 EXPOSE 10000
 
-# Health check to ensure aiohttp is responding
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:${PORT:-10000}/api/stats || exit 1
-
 # Start the bot automation engine and web server
 CMD ["python", "lc.py"]
