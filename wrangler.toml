@@ -1,0 +1,8 @@
+name = "trefguu"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "saito_accounts_db"
+database_id = "3cdfbf61-2f4b-4bc7-9f4b-7c21b9c18640"

@@ -1,0 +1,23 @@
+# ========================================================
+# Render Blueprint Configuration (render.yaml)
+# Deploy via: Render Dashboard -> Blueprints -> Connect Repo
+# Region: Singapore (closest to Garena Asia/BD/IND/SG servers)
+# ========================================================
+services:
+  - type: web
+    name: saito-freefire-bot
+    env: docker
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    plan: starter # Starter plan recommended for persistent background sockets
+    region: singapore # Closest region for Free Fire Asian game gateways
+    branch: main
+    numInstances: 1
+    healthCheckPath: /api/stats
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: SERVER_PORT
+        value: 10000
+      - key: PYTHONUNBUFFERED
+        value: "1"

@@ -1,0 +1,6 @@
+{
+  "name": "SAITO Control — Free Fire Level Up Console",
+  "description": "Cyber-tactical Free Fire level up bot manager and real-time EXP progression dashboard with Cloudflare and Render deployment configurations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
