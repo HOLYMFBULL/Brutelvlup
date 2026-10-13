@@ -786,19 +786,13 @@ async def start_web_dashboard(host: str = "0.0.0.0", port: int = 10000):
     global _GLOBAL_RUNNER, _GLOBAL_SITE
     app = web.Application(middlewares=[cors_middleware])
 
-    # Root & Universal health routes for Render / Railway / Cloudflare (both GET and HEAD)
+    # Root & Universal health routes for Render / Railway / Cloudflare (add_get automatically handles HEAD in aiohttp)
     app.router.add_get("/", handle_index)
-    app.router.add_head("/", handle_index)
     app.router.add_get("/health", handle_health)
-    app.router.add_head("/health", handle_health)
     app.router.add_get("/healthz", handle_health)
-    app.router.add_head("/healthz", handle_health)
     app.router.add_get("/ping", handle_health)
-    app.router.add_head("/ping", handle_health)
     app.router.add_get("/api/health", handle_health)
-    app.router.add_head("/api/health", handle_health)
     app.router.add_get("/api/stats", handle_get_stats)
-    app.router.add_head("/api/stats", handle_get_stats)
 
     # Bot Account and Log Controls
     app.router.add_post("/api/account/add", handle_add_account)

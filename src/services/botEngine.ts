@@ -170,6 +170,11 @@ export class BotEngineService {
         const latency = Math.round(performance.now() - start);
 
         if (res.ok) {
+          const contentType = res.headers.get('content-type') || '';
+          if (!contentType.includes('application/json')) {
+            // Ignore non-JSON responses (e.g. index.html SPA fallback from Pages)
+            continue;
+          }
           const data = await res.json();
           this.connection.status = 'connected';
           this.connection.latencyMs = latency;
@@ -252,6 +257,13 @@ export class BotEngineService {
       const latency = Math.round(performance.now() - start);
 
       if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          return {
+            success: false,
+            message: `Endpoint returned HTML (${contentType}) instead of JSON. Ensure Render backend is running.`
+          };
+        }
         this.connection.backendUrl = cleanUrl;
         this.connection.status = 'connected';
         this.connection.latencyMs = latency;

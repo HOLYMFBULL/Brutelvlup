@@ -3006,7 +3006,9 @@ async def main():
         _dashboard_runner = await start_web_dashboard(host=WEB_HOST, port=WEB_PORT)
         print_success(f"[✓] Dashboard UI Active & Health Checked: http://{WEB_HOST}:{WEB_PORT}")
     except Exception as e:
+        import traceback
         print_error(f"Could not start web dashboard: {e}")
+        traceback.print_exc()
 
     async def on_account_added_handler(data):
         sync_devices_with_accounts()
